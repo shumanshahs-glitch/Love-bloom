@@ -3,78 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I Love You - Sohail Shah</title>
+    <title>Cosmic Universe - Sohail Shah</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: #000;
-            color: #ff0033;
-            font-family: 'Arial', sans-serif;
+            background-color: #020208;
+            color: #fff;
             overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Password Screen Styling */
+        #passwordScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle, #101026 0%, #000000 100%);
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            height: 100vh;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            max-width: 90%;
+            width: 350px;
+        }
+
+        .login-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #00d2ff, #ff007f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .login-card input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 210, 255, 0.4);
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            font-size: 1rem;
+            text-align: center;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .login-card input:focus {
+            border-color: #ff007f;
+            box-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
+        }
+
+        .login-card button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(45deg, #ff007f, #00d2ff);
+            color: #fff;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .login-card button:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.6);
+        }
+
+        #errorMsg {
+            color: #ff3366;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            display: none;
+        }
+
+        /* Universe Overlay Header */
+        .overlay {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            text-align: center;
+            pointer-events: none;
+            z-index: 10;
         }
 
         .title {
-            font-size: 3rem;
-            font-weight: bold;
-            text-shadow: 0 0 10px #ff0033, 0 0 20px #ff0033;
-            margin-bottom: 10px;
-            z-index: 2;
+            font-size: 2.2rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, #ff8c00, #ff007f, #00d2ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
+            font-weight: 800;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: #a0aec0;
+            margin-top: 4px;
+            letter-spacing: 2px;
+        }
+
+        .instructions {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.8rem;
+            pointer-events: none;
+            z-index: 10;
         }
 
         canvas {
+            display: block;
+            width: 100vw;
+            height: 100vh;
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-
-        .name {
-            position: absolute;
-            bottom: 15%;
-            font-size: 2.2rem;
-            font-weight: bold;
-            color: #ffffff;
-            text-shadow: 0 0 10px #ff0033, 0 0 20px #ff0033, 0 0 30px #ff0033;
-            z-index: 2;
-            letter-spacing: 2px;
         }
     </style>
 </head>
 <body>
 
-    <div class="title">I Love You!</div>
-    
-    <canvas id="heartCanvas"></canvas>
+    <!-- PASSWORD SCREEN -->
+    <div id="passwordScreen">
+        <div class="login-card">
+            <h2>Cosmic Portal</h2>
+            <input type="password" id="passInput" placeholder="Enter Password..." onkeypress="handleKey(event)">
+            <button onclick="checkPassword()">UNLOCK UNIVERSE</button>
+            <p id="errorMsg">Incorrect Password! Hint: Shuman</p>
+        </div>
+    </div>
 
-    <!-- Dil ke neeche aapka naam -->
-    <div class="name">Sohail Shah</div>
+    <!-- MAIN UNIVERSE CANVAS & OVERLAY -->
+    <div class="overlay">
+        <h1 class="title">COSMIC SYSTEM</h1>
+        <p class="subtitle">Designed for Sohail Shah</p>
+    </div>
+
+    <div class="instructions">Click/Tap anywhere to transform into Heart | Move to leave Dragon Trail</div>
+
+    <canvas id="universeCanvas"></canvas>
 
     <script>
-        const canvas = document.getElementById('heartCanvas');
+        // Password Verification Function
+        function checkPassword() {
+            const input = document.getElementById('passInput').value;
+            const errorMsg = document.getElementById('errorMsg');
+            const passScreen = document.getElementById('passwordScreen');
+
+            if (input === "Shuman") {
+                passScreen.style.opacity = '0';
+                setTimeout(() => {
+                    passScreen.style.visibility = 'hidden';
+                }, 800);
+            } else {
+                errorMsg.style.display = 'block';
+                document.getElementById('passInput').value = '';
+            }
+        }
+
+        function handleKey(e) {
+            if (e.key === 'Enter') checkPassword();
+        }
+
+        // --- UNIVERSE CANVAS ANIMATION CODE ---
+        const canvas = document.getElementById('universeCanvas');
         const ctx = canvas.getContext('2d');
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
 
         window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
         });
 
-        // Heart mathematical formula
-        function heartPoint(t) {
+        // Planets Configuration
+        const planets = [
+            { radius: 4,  distance: 70,  speed: 0.025, color: "#a6a6a6", angle: 0 },
+            { radius: 7,  distance: 105, speed: 0.018, color: "#e3bb76", angle: 1 },
+            { radius: 8,  distance: 145, speed: 0.013, color: "#4d94ff", angle: 2 },
+            { radius: 6,  distance: 185, speed: 0.010, color: "#ff5233", angle: 3 },
+            { radius: 15, distance: 235, speed: 0.007, color: "#dca267", angle: 4 },
+            { radius: 12, distance: 295, speed: 0.005, color: "#e6c875", hasRing: true, angle: 5 }
+        ];
+
+        // Vortex Particles & Heart Morph
+        const PARTICLE_COUNT = 800;
+        const particles = [];
+        let isHeartMode = false;
+
+        function getHeartPoint(t) {
             const x = 16 * Math.pow(Math.sin(t), 3);
             const y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
             return { x, y };
@@ -86,56 +237,151 @@
             }
 
             reset() {
-                const t = Math.random() * Math.PI * 2;
-                const point = heartPoint(t);
-                
-                // Scale & Position
-                const scale = Math.min(canvas.width, canvas.height) / 40;
-                this.targetX = canvas.width / 2 + point.x * scale;
-                this.targetY = canvas.height / 2 + point.y * scale - 30; // Slightly shifted up for name fit
+                this.angle = Math.random() * Math.PI * 2;
+                this.distance = Math.random() * (Math.min(width, height) * 0.45) + 30;
+                this.speed = (0.002 + Math.random() * 0.008);
+                this.size = Math.random() * 2 + 0.5;
+                this.color = ['#00ffff', '#ff007f', '#7928ca', '#ffffff'][Math.floor(Math.random() * 4)];
 
-                this.x = canvas.width / 2 + (Math.random() - 0.5) * 50;
-                this.y = canvas.height / 2 + (Math.random() - 0.5) * 50;
-                
-                this.size = Math.random() * 2 + 1;
-                this.speed = Math.random() * 0.05 + 0.02;
-                this.alpha = Math.random() * 0.8 + 0.2;
+                // Heart target coordinates
+                const t = Math.random() * Math.PI * 2;
+                const hp = getHeartPoint(t);
+                const scale = Math.min(width, height) / 35;
+                this.heartX = width / 2 + hp.x * scale;
+                this.heartY = height / 2 + hp.y * scale;
+
+                this.currX = width / 2;
+                this.currY = height / 2;
             }
 
             update() {
-                this.x += (this.targetX - this.x) * this.speed;
-                this.y += (this.targetY - this.y) * this.speed;
-
-                if (Math.hypot(this.targetX - this.x, this.targetY - this.y) < 2) {
-                    if (Math.random() < 0.02) {
-                        this.reset();
-                    }
+                if (isHeartMode) {
+                    // Morph to Heart shape
+                    this.currX += (this.heartX - this.currX) * 0.05;
+                    this.currY += (this.heartY - this.currY) * 0.05;
+                } else {
+                    // Swirl in Black Hole / Solar Vortex
+                    this.angle += this.speed;
+                    this.currX = width / 2 + Math.cos(this.angle) * this.distance;
+                    this.currY = height / 2 + Math.sin(this.angle) * (this.distance * 0.45);
                 }
             }
 
             draw() {
-                ctx.fillStyle = `rgba(255, 0, 51, ${this.alpha})`;
+                ctx.save();
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.arc(this.currX, this.currY, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = isHeartMode ? '#ff0055' : this.color;
+                ctx.shadowBlur = isHeartMode ? 10 : 5;
+                ctx.shadowColor = isHeartMode ? '#ff0055' : this.color;
                 ctx.fill();
+                ctx.restore();
             }
         }
 
-        const particles = [];
-        const particleCount = 1200;
-
-        for (let i = 0; i < particleCount; i++) {
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
             particles.push(new Particle());
         }
 
-        function animate() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        // Dragon Cursor Trail
+        const trail = [];
+        function addTrailPoint(x, y) {
+            trail.push({ x, y, size: 8, alpha: 1, color: '#00d2ff' });
+        }
 
+        window.addEventListener('mousemove', (e) => addTrailPoint(e.clientX, e.clientY));
+        window.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 0) {
+                addTrailPoint(e.touches[0].clientX, e.touches[0].clientY);
+            }
+        });
+
+        // Toggle Heart Transformation on Click/Tap
+        window.addEventListener('click', (e) => {
+            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'BUTTON') {
+                isHeartMode = !isHeartMode;
+            }
+        });
+
+        // Main Animation Loop
+        function animate() {
+            ctx.fillStyle = 'rgba(2, 2, 8, 0.25)';
+            ctx.fillRect(0, 0, width, height);
+
+            const centerX = width / 2;
+            const centerY = height / 2;
+
+            if (!isHeartMode) {
+                // 1. Draw Orbits
+                planets.forEach(p => {
+                    ctx.beginPath();
+                    ctx.ellipse(centerX, centerY, p.distance, p.distance * 0.45, 0, 0, Math.PI * 2);
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                });
+
+                // 2. Draw Solar Core (Sun)
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, 25, 0, Math.PI * 2);
+                const sunGlow = ctx.createRadialGradient(centerX, centerY, 5, centerX, centerY, 50);
+                sunGlow.addColorStop(0, '#ffffff');
+                sunGlow.addColorStop(0.3, '#ffcc00');
+                sunGlow.addColorStop(0.8, 'rgba(255, 68, 0, 0.8)');
+                sunGlow.addColorStop(1, 'transparent');
+                ctx.fillStyle = sunGlow;
+                ctx.shadowBlur = 30;
+                ctx.shadowColor = "#ff5500";
+                ctx.fill();
+                ctx.restore();
+
+                // 3. Draw Planets
+                planets.forEach(p => {
+                    p.angle += p.speed;
+                    const x = centerX + Math.cos(p.angle) * p.distance;
+                    const y = centerY + Math.sin(p.angle) * (p.distance * 0.45);
+
+                    if (p.hasRing) {
+                        ctx.beginPath();
+                        ctx.ellipse(x, y, p.radius * 2, p.radius * 0.7, 0.3, 0, Math.PI * 2);
+                        ctx.strokeStyle = 'rgba(230, 200, 117, 0.6)';
+                        ctx.lineWidth = 2;
+                        ctx.stroke();
+                    }
+
+                    ctx.beginPath();
+                    ctx.arc(x, y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color;
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = p.color;
+                    ctx.fill();
+                });
+            }
+
+            // 4. Update & Draw Particles (Vortex / Heart)
             particles.forEach(p => {
                 p.update();
                 p.draw();
             });
+
+            // 5. Draw Interactive Dragon Trail
+            for (let i = trail.length - 1; i >= 0; i--) {
+                const t = trail[i];
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(t.x, t.y, t.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0, 210, 255, ${t.alpha})`;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = '#00d2ff';
+                ctx.fill();
+                ctx.restore();
+
+                t.size *= 0.94;
+                t.alpha -= 0.02;
+
+                if (t.alpha <= 0) trail.splice(i, 1);
+            }
 
             requestAnimationFrame(animate);
         }
